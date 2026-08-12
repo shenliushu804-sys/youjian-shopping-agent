@@ -1,0 +1,95 @@
+/**
+ * 优拣 · AI 购物决策代理 — 设计令牌
+ * 基于千问办公原型 CSS 变量迁移
+ */
+
+/* ── 种子令牌 ── */
+$seed-bg: #fafafa;
+$seed-surface: #ffffff;
+$seed-fg: #0d0d0d;
+$seed-primary: #10a37f;
+$seed-accent: #0d0d0d;
+$seed-radius: 12px;
+$sp-scale: 1;
+
+/* ── 派生令牌 ── */
+$bg: $seed-bg;
+$surface: $seed-surface;
+$fg: $seed-fg;
+$muted: #7a7a7a;
+$faint: #a3a3a3;
+$border-c: #d6d6d6;
+$border-soft: #ededed;
+$fg-soft: #f3f3f3;
+$primary: $seed-primary;
+$primary-soft: #e4f5ef;
+$primary-text: #0b7d60;
+$btn-bg: $seed-accent;
+$btn-fg: $seed-bg;
+$btn-bg-hover: #2a2a2a;
+
+/* ── 平台语义色 ── */
+$jd: #d92612;
+$jd-soft: #fde8e5;
+$tmall: #e84c00;
+$tmall-soft: #fef0e6;
+$alipay: #1677ff;
+$wechat: #09b552;
+$unionpay: #d43a2f;
+
+/* ── 尺寸令牌 ── */
+$radius: 12px;
+$radius-s: 6px;
+$radius-l: 18px;
+$gap: 12px;
+$pad: 16px;
+$page-margin: 20px;
+
+/* ── 字体 ── */
+$font-body: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+$font-display: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+$font-mono: ui-monospace, Menlo, monospace;
+$fs-h1: 24px;
+$fs-h2: 17px;
+$fs-body: 14.5px;
+$fs-small: 13px;
+$fs-meta: 11.5px;
+
+/* ── uni-app 内置变量兼容 ── */
+$uni-color-primary: $primary;
+$uni-color-success: #4cd964;
+$uni-color-warning: #f0ad4e;
+$uni-color-error: #dd524d;
+$uni-text-color: $fg;
+$uni-text-color-inverse: #fff;
+$uni-text-color-grey: $muted;
+$uni-text-color-placeholder: $faint;
+$uni-text-color-disable: #c0c0c0;
+$uni-bg-color: $surface;
+$uni-bg-color-grey: $bg;
+$uni-bg-color-hover: #f1f1f1;
+$uni-bg-color-mask: rgba(0, 0, 0, 0.4);
+$uni-border-color: $border-c;
+$uni-font-size-sm: 12px;
+$uni-font-size-base: 14px;
+$uni-font-size-lg: 16px;
+$uni-img-size-sm: 20px;
+$uni-img-size-base: 26px;
+$uni-img-size-lg: 40px;
+$uni-border-radius-sm: $radius-s;
+$uni-border-radius-base: $radius;
+$uni-border-radius-lg: $radius-l;
+$uni-border-radius-circle: 50%;
+$uni-spacing-row-sm: 5px;
+$uni-spacing-row-base: 10px;
+$uni-spacing-row-lg: 15px;
+$uni-spacing-col-sm: 4px;
+$uni-spacing-col-base: 8px;
+$uni-spacing-col-lg: 12px;
+$uni-opacity-disabled: 0.3;
+$uni-color-title: $fg;
+$uni-font-size-title: 20px;
+$uni-color-subtitle: #555;
+$uni-font-size-subtitle: 18px;
+$uni-color-paragraph: #3f536e;
+$uni-font-size-paragraph: 15px;

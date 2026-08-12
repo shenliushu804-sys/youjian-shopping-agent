@@ -1,0 +1,18 @@
+{
+  "pages": [
+    { "path": "pages/need-input/need-input", "style": { "navigationBarTitleText": "优拣 · AI 购物", "navigationStyle": "custom" } },
+    { "path": "pages/ai-analysis/ai-analysis", "style": { "navigationBarTitleText": "AI 分析中", "navigationStyle": "custom" } },
+    { "path": "pages/product-compare/product-compare", "style": { "navigationBarTitleText": "三款对比", "navigationStyle": "custom" } },
+    { "path": "pages/ai-recommend/ai-recommend", "style": { "navigationBarTitleText": "AI 推荐", "navigationStyle": "custom" } },
+    { "path": "pages/checkout/checkout", "style": { "navigationBarTitleText": "确认支付", "navigationStyle": "custom" } }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#fafafa",
+    "backgroundColor": "#fafafa",
+    "app-plus": {
+      "titleNView": false
+    }
+  },
+  "tabBar": null
+}

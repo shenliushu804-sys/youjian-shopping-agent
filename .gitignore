@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# 登录态与本地数据（严禁提交）
+data/
+
+# Node
+node_modules/
+dist/
+*.local
+
+# 环境变量与密钥
+.env
+.env.*
+!.env.example
+
+# 日志与 macOS
+*.log
+.DS_Store
