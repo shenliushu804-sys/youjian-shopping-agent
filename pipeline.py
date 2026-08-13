@@ -18,6 +18,7 @@ from platforms import get_adapter
 from platforms.browser import create_browser, check_login, has_cookies
 from llm.intent import parse_intent
 from llm.analyzer import recommend
+from selection import filter_by_budget, merge_products
 
 
 def product_to_frontend(p, detail=None, idx=0):
@@ -88,14 +89,14 @@ async def run_pipeline(need, budget_min, budget_max, platforms, background):
             finally:
                 await page.close()
 
-        if budget_max > 0:
-            filtered = [p for p in all_products if budget_min <= p.price <= budget_max * (1 + BUDGET_TOLERANCE)]
-        else:
-            filtered = all_products
-        print(f'[pipeline] budget filter: {len(all_products)} -> {len(filtered)}', file=sys.stderr)
+        before = len(all_products)
+        filtered = filter_by_budget(all_products, budget_max, BUDGET_TOLERANCE)
+        if budget_min > 0:
+            filtered = [p for p in filtered if p.price >= budget_min]
+        print(f'[pipeline] budget filter: {before} -> {len(filtered)}', file=sys.stderr)
 
         details = []
-        for p in filtered[:MAX_DETAIL_PRODUCTS]:
+        for p in merge_products(filtered, MAX_DETAIL_PRODUCTS):
             adapter = get_adapter(p.platform)
             if not adapter:
                 continue
@@ -148,14 +149,6 @@ def main():
     parser.add_argument('--platforms', default='jd,tmall')
     parser.add_argument('--background', default='')
     args = parser.parse_args()
-
-    env_file = os.path.join(os.path.dirname(__file__), 'backend', '.env')
-    if os.path.exists(env_file):
-        for line in open(env_file):
-            line = line.strip()
-            if line and not line.startswith('#') and '=' in line:
-                k, v = line.split('=', 1)
-                os.environ[k.strip()] = v.strip()
 
     platforms = [p.strip() for p in args.platforms.split(',') if p.strip()]
     result = asyncio.run(run_pipeline(

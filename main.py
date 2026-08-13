@@ -18,6 +18,7 @@ from llm.analyzer import recommend
 from models import Product
 from platforms import get_adapter
 from platforms.browser import create_browser, save_session_cookies, has_cookies, check_login
+from selection import filter_by_budget, merge_products
 
 
 def _fmt_price(p):
@@ -69,15 +70,15 @@ async def run(user_input: str):
             print("\n❌ 未检索到商品，请检查登录态或稍后重试")
             return
 
-        # 预算预过滤
+        # 预算预过滤：有预算时淘汰超预算和价格未知的商品
+        before = len(all_products)
+        all_products = filter_by_budget(all_products, intent.budget_max, BUDGET_TOLERANCE)
         if intent.budget_max > 0:
             limit = intent.budget_max * (1 + BUDGET_TOLERANCE)
-            before = len(all_products)
-            all_products = [p for p in all_products if p.price <= limit or p.price == 0]
-            print(f"\n  预算过滤: {before} → {len(all_products)} 个（上限 ¥{limit:.0f}）")
+            print(f"\n  预算过滤: {before} → {len(all_products)} 个（上限 ¥{limit:.0f}，价格未知已剔除）")
 
         print(f"\n[3/5] 采集详情参数（Top {MAX_DETAIL_PRODUCTS}）...")
-        top = all_products[:MAX_DETAIL_PRODUCTS]
+        top = merge_products(all_products, MAX_DETAIL_PRODUCTS)
         details = []
         for i, p in enumerate(top, 1):
             # 降低访问频率，避免平台频控
@@ -108,7 +109,7 @@ async def run(user_input: str):
         print("推荐结果")
         print("=" * 60)
         for i, r in enumerate(recommendations, 1):
-            print(f"\n推荐 #{i} | 评分 {r.score:.0f}/100")
+            print(f"\n推荐 #{i}")
             print(f"  {r.product.title}")
             print(f"  {_fmt_price(r.product.price)} | {r.product.shop_name}")
             print(f"  理由: {r.reason}")

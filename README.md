@@ -57,31 +57,13 @@ python3 main.py "路由器 120平米全屋覆盖 预算300"
 python3 llm/local_server.py
 ```
 
-在项目根目录或 `youjian-mini/backend/.env` 创建 `.env`（参考 `youjian-mini/backend/.env.example`），或直接设置环境变量 `QIANWEN_API_KEY`。
+按以下顺序查找 `.env`（先找到的键生效，已有环境变量优先）：
 
-## 前端（优拣 mini）
+1. 项目根目录 `.env`
+2. `backend/.env`
+3. `youjian-mini/backend/.env`
 
-`youjian-mini/` 为 uni-app 小程序前端 + Node.js 后端，支持 Mock 模式零依赖运行：
-
-```bash
-cd youjian-mini/mock-server
-npm install && npm start
-```
-
-真实抓取模式需先完成 Python 端登录，并启动后端：
-
-```bash
-cd youjian-mini/backend
-cp .env.example .env   # 填入 QIANWEN_API_KEY
-npm install && npm start
-```
-
-前端开发模式：
-
-```bash
-cd youjian-mini
-npm install && npm run dev:h5
-```
+也可以直接设置环境变量 `QIANWEN_API_KEY`。
 
 ## 项目结构
 
@@ -92,7 +74,7 @@ my-shopping/
 ├── start.sh             # 一键启动
 ├── config.py            # 配置
 ├── models.py            # 数据模型
-├── pipeline.py          # Node 后端调用的选品流水线
+├── selection.py         # 跨平台混排 + 预算过滤
 ├── llm/
 │   ├── client.py        # LLM 统一入口（本地/API）
 │   ├── local_server.py  # 本地 Qwen3.5-2B 服务
@@ -103,17 +85,21 @@ my-shopping/
     ├── base.py          # 适配器基类 + 品牌提取
     ├── jd.py            # 京东适配器
     └── tmall.py         # 天猫/淘宝适配器
-
-另有 `youjian-mini/`（uni-app 前端 + Node 后端 + Mock 服务）。
 ```
 
 ## 注意事项
 
+- Cookie 是京东/天猫账号登录态，等同于账号操作权限；保存文件权限为 `0600`，请勿提交、分享或用于多用户对外服务
 - Cookie 会过期，失效时重新运行 `python3 login.py`
 - 高频访问会触发平台频控，详情采集已限速（Top 5 + 随机延迟）
 - 商品参数缺失时标注"未获取"，LLM 不会编造数据
 - 评价内容受平台反爬限制，当前采集"累计评价数"作为评价信号
 - 下单只到支付确认页，支付必须本人操作
+- 推荐排序由 LLM 综合判断，仅用于排序，不对外展示精确量化评分
+
+## 免责声明
+
+本项目仅供个人学习与本地自用。模拟登录、自动采集与加购可能违反京东/天猫等平台的用户协议与 robots 约定，个人自用属灰色地带；请勿将本项目改造为面向公众的付费/免费服务，否则需自行评估法律与平台风控风险。
 
 ## 开发文档
 

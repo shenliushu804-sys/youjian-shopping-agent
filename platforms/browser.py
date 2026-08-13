@@ -17,6 +17,7 @@ def load_cookies() -> list:
 def save_cookies(cookies: list):
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     COOKIE_FILE.write_text(json.dumps(cookies, ensure_ascii=False, indent=2))
+    COOKIE_FILE.chmod(0o600)
 
 
 def has_cookies() -> bool:

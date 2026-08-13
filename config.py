@@ -38,17 +38,21 @@ MODEL_PATH = os.environ.get(
 )
 LOCAL_LLM_PORT = int(os.environ.get("LOCAL_LLM_PORT", "8001"))
 
-# 环境变量加载（支持项目根目录或 backend/.env）
+# 环境变量加载（.env）
 def load_env():
-    for env_file in (BASE_DIR / ".env", BASE_DIR / "backend" / ".env"):
+    env_files = (
+        BASE_DIR / ".env",
+        BASE_DIR / "backend" / ".env",
+        BASE_DIR / "youjian-mini" / "backend" / ".env",
+    )
+    for env_file in env_files:
         if not env_file.exists():
             continue
         for line in env_file.read_text().splitlines():
             line = line.strip()
             if line and not line.startswith("#") and "=" in line:
                 k, v = line.split("=", 1)
-                os.environ[k.strip()] = v.strip()
-        break
+                os.environ.setdefault(k.strip(), v.strip())
 
 
 load_env()
